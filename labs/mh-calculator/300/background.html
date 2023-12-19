@@ -1,0 +1,8 @@
+An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation. When this occurs, the value may wrap to become a very small or negative number. While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected. This is especially the case if the integer overflow can be triggered using user-supplied inputs. This becomes security-critical when the result is used to control looping, make a security decision, or determine the offset or size in behaviors such as memory allocation, copying, concatenation, etc.<br><br>
+<img src="./assets/sintoverflow.jpg" alt="IntOverflow">
+<br><br>
+https://compsecurityconcepts.wordpress.com/2014/12/31/integer-overflow/
+<br><br>
+In the 1980s, Therac, a radiation therapy machine, had an interger overflow bug relating to an incrementing variable that only had a byte allocated to it. This oversight resulted in multiple deaths and dozens of injuries.
+<br><br>
+In 2015, the Boeing 787 electrical system was found the have a critical interger overflow bug that led to the loss of power throughout the plane. A second counter for the uptime of the system would overflow pass 2^31 hundredths of a second, or 249 days of uptime. Until this patch, all Boeing 787 operators were ordered to reset the computer system onboard periodically.

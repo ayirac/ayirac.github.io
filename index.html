@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Portal</title>
+</head>
+<body>
+    <div id="top-container">
+        <div id="logo-container">
+            <!-- logo here-->
+        </div>
+        <div id="navbar-container">
+            <a href="./" class="navbar-link">Home</a>
+            <a href="./about.html" class="navbar-link">About</a>
+        </div>
+    </div>
+
+    <div id="categories-container">
+        <div class="category-container" id="cat-mishaps">
+            <h2 class="cat-label">Common Mishaps</h2>
+            <div class="labs-container">
+                <div class="lab-container" id="mishaps-receipt">
+                    <h3 class="lab-label">Store Receipt</h3>
+                    <p class="brief-desc">In this lab, a simple receipt program has been constructed without consideration for integer overflows or operating system command injections. You will examine the program, identify where the issue lies, and try to exploit it by running the program with a specific payload.
+                    </p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('mh-store-receipt', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('mh-store-receipt', 300)">300</div>
+                        <div class="box crossed-out">400</div>
+                    </div>
+                </div>
+                <div class="lab-container" id="mishaps-calculator">
+                    <h3 class="lab-label">Calculator</h3>
+                    <p class="brief-desc">In this lab, a simple calculator program has been constructed without consideration for integer overflows and OS Command injections. You will examine the program, identify where the issue lies, and try to exploit it by running the program with a specific payload.</p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('mh-calculator', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('mh-calculator', 300)">300</div>
+                        <div class="box crossed-out">400</div>
+                    </div>
+                </div>
+                <div class="lab-container" id="mishaps-regex">
+                    <h3 class="lab-label">Email Verify With EvilRegex</h3>
+                    <p class="brief-desc">In this lab, a simple python program checks if a user provided email address is valid or not by using a regular expression pattern. The specific regex pattern used in the program is prone to a Regular Expression Denial of Service vulnerablitiy that you are asked to test for and patch.</p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('mh-regex', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('mh-regex', 300)">300</div>
+                        <div class="box crossed-out">400</div>
+                    </div>
+                </div>
+                <div class="lab-container" id="mishaps-dynamiclink">
+                    <h3 class="lab-label">Dynamic Link Insecurity</h3>
+                    <p class="brief-desc">A brief description that will stretch into a sentence, about this large. Maybe ellis if overlap</p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('mh-dynamniclink', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('mh-dynamniclink', 300)">300</div>
+                        <div class="box crossed-out">400</div>
+                    </div>
+                </div>
+                <div class="lab-container" id="mishaps-misconfiguredapi">
+                    <h3 class="lab-label">Misconfigured API</h3>
+                    <p class="brief-desc">A brief description that will stretch into a sentence, about this large. Maybe ellis if overlap</p>
+                    <div class="lab-link-container">
+                        <div class="box crossed-out">100</div>
+                        <div class="box" onclick="redirectToLab('mh-misconfiguredapi', 300)">300</div>
+                        <div class="box crossed-out">400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="category-container" id="cat-vulnlib">
+            <h2 class="cat-label">Vulnerable Libraries</h2>
+            <div class="labs-container">
+                <div class="lab-container" id="vulnlib-strdiff">
+                    <h3 class="lab-label">String Difference Library</h3>
+                    <p class="brief-desc">In this lab, a string difference library written in C has a vulnerability that'll cause buffers to overflow, potentially resulting in a stack overflow attack. You are asked to create a program that'll utilizing the similarity_percentage library function to compare two stings. </p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('vl-strdiff', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('vl-strdiff', 300)">300</div>
+                        <div class="box" onclick="redirectToLab('vl-strdiff', 400)">400</div>
+                    </div>
+                </div>
+
+                <div class="lab-container" id="vulnlib-qa">
+                    <h3 class="lab-label">Question/Ans Library</h3>
+                    <p class="brief-desc">This lab utilizes a vulnerable question answer library that connects with a SQL database to retrieve questions/answers for checking if answers for a question are correct. SQL statements might introduce unintended vulnerabiltiies if input isn't santizied correctly or the statements aren't prepared/paramertized.</p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('vl-qa', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('vl-qa', 300)">300</div>
+                        <div class="box" onclick="redirectToLab('vl-qa', 400)">400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="category-container" id="cat-token">
+            <h2 class="cat-label">Token Mishaps</h2>
+            <div class="labs-container">
+                <div class="lab-container" id="token-ghosttoken">
+                    <h3 class="lab-label">GhostToken</h3>
+                    <p class="brief-desc">Token architectures can be complex and vulnerablities can exist in the system design that is a result of some quality of life improvement. In this lab, we explore a file directory webserver that allows token based resource lookup, along with a vulnerable account deletion recovery that allows an attacker to gain access to a system and stay 'hidden'.</p>
+                    <div class="lab-link-container">
+                        <div class="box" onclick="redirectToLab('token-ghosttoken', 100)">100</div>
+                        <div class="box" onclick="redirectToLab('token-ghosttoken', 300)">300</div>
+                        <div class="box" onclick="redirectToLab('token-ghosttoken', 400)">400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function redirectToLab(lab, level) {
+        window.location.href = `lab.html?lab=${lab}&level=${level}`;
+    }
+</script>

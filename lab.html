@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Portal</title>
+</head>
+<body>
+    <div id="top-container">
+        <div id="logo-container">
+            <!-- logo here-->
+        </div>
+        <div id="navbar-container">
+            <a href="./" class="navbar-link">Home</a>
+            <a href="./about.html" class="navbar-link">About</a>
+        </div>
+    </div>
+
+    <div id="bottom-lab-container">
+        <div id="lab-document">
+            <div id="lab-title-container">
+                <h2 id="lab-title">Introduction Section </h2>
+            </div>
+            <div id="lab-text-container">
+                <p id="lab-text">Content for Introduction goes here.</p>
+                <div id="questions-list"></div>
+            </div>
+        </div>
+        <div id="lab-navigation">
+            <ul id="section-list">
+                <li><a href="#" onclick="changeSection('laboverview', 'Lab Overview')">Lab Overview</a></li>
+                <li><a href="#" onclick="changeSection('background', 'Background')">Background</a></li>
+                <li><a href="#" onclick="changeSection('instructions', 'Instructions')">Instructions</a></li>
+                <li><a href="#" onclick="changeSection('questions', 'Questions')">Questions</a></li>
+                <li><a href="#" onclick="changeSection('conclusion', 'Conclusion')">Conclusion</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const questionDatabase = {
+            "mh-store-receipt": {
+                "100": [
+                    {
+                        question: "What is the max number that the calculation result can be? (Hint: Integers are signed & 32bits)",
+                        options: [
+                            "Option A: −2147483648",
+                            "Option B: 2147483647",
+                            "Option C: 4294967296",
+                            "Option D: 9,223,372,036,854,775,807"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which of the following arithmetic operations can cause an integer overflow?",
+                        options: [
+                            "Option A: Multiplication",
+                            "Option B: Division",
+                            "Option C: Addition",
+                            "Option D: All of the Above"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "Out of the math operations below, which one does not produce an integer overflow?",
+                        options: [
+                            "Option A: 2073741823 + 1073741823",
+                            "Option B: -2147483648 - 5",
+                            "Option C: 517 + 21474105",
+                            "Option D: 2147483647 + 20"
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                "300": [
+                    {
+                        question: "What is the minimum number that the calculation result can be? (Hint: Integers are signed & 32bits)",
+                        options: [
+                            "Option A: −2147483647",
+                            "Option B: -65535",
+                            "Option C: −2147483648",
+                            "Option D: 2147483647"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What can an integer overflow lead to?",
+                        options: [
+                            "Option A: Denial of Service (DoS)",
+                            "Option B: Memory Corruption/Modification",
+                            "Option C: Code Execution",
+                            "Option D: All of above"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "Given the following C statements: sprintf(command, \"\\bin\\cat %s\", userVariable); system(command); How can you inject into the system command to modify the command, and even append new programs to run in the program privileged shell?",
+                        options: [
+                            "Option A: You can add any input you wish before a ; separator and then add the location of a program you wish you execute in the program privileged shell. E.g: \";id\"",
+                            "Option B. Injecting random characters such as $, @, and # to confuse the system and execute unintended commands.",
+                            "Option C. Use the %L format specifier to dynamically lengthen the buffer and gain control over the command execution."
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            }, 
+            "mh-calculator": {
+                "300": [
+                    {
+                        question: "What is the max number that the calculation result can be? (Hint: Integers are signed & 32bits)",
+                        options: [
+                            "Option A: −2147483648",
+                            "Option B: 2147483647",
+                            "Option C: 4294967296",
+                            "Option D: 9,223,372,036,854,775,807"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which of the following arithmetic operations can cause an integer overflow?",
+                        options: [
+                            "Option A: Multiplication",
+                            "Option B: Division",
+                            "Option C: Addition",
+                            "Option D: All of the Above"
+                        ],
+                        correctAnswer: 3
+                    }
+                ],
+                "100": [
+                    {
+                        question: "What is the max number that the calculation result can be? (Hint: Integers are signed & 32bits)",
+                        options: [
+                            "Option A: −2147483648",
+                            "Option B: 2147483647",
+                            "Option C: 4294967296",
+                            "Option D: 9,223,372,036,854,775,807"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "Which of the following arithmetic operations can cause an integer overflow?",
+                        options: [
+                            "Option A: Multiplication",
+                            "Option B: Division",
+                            "Option C: Addition",
+                            "Option D: All of the Above"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "Out of the math operations below, which one does not produce an integer overflow?",
+                        options: [
+                            "Option A: 2073741823 + 1073741823",
+                            "Option B: -2147483648 - 5",
+                            "Option C: 517 + 21474105",
+                            "Option D: 2147483647 + 20"
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            "mh-regex": {
+                "100": [
+                    {
+                        question: "What sort of regex syntax might result in a ReDoS given the right input?",
+                        options: [
+                            "Option A: Using parentheses for grouping.",
+                            "Option B: Nested repetitions.",
+                            "Option C: Always using non-greedy quantifiers.",
+                            "Option D: Ignoring character classes."
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is one potential consequence of poorly optimized regex patterns such as evilregex, on a web server?",
+                        options: [
+                            "Option A: Increased security against internal cyber attacks.",
+                            "Option B: Increased edge case detection.",
+                            "Option C: It'll suffer a Denial of Service attack that'll slow or halt web traffic."
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What are good practices to avoid using evilregex by accident?",
+                        options: [
+                            "Option A: Be wary of pulling any regex pattern from the internet without verifying that it came from a reputable source.",
+                            "Option B: Try not to overcomplicate your expression, often there is ways to simplify a long expression that might contain hard to diagnose evilregex issues.",
+                            "Option C: Test the regex statement out thoroughly using a static and dynamic regex analyzer that'll detect any traces of a ReDoS coming from a pattern.",
+                            "Option D: All of the above."
+                        ],
+                        correctAnswer: 3
+                    }
+                ],
+                "300": [
+                    {
+                        question: "What sort of regex syntax might result in a ReDoS given the right input?",
+                        options: [
+                            "Option A: Using parentheses for grouping.",
+                            "Option B: Nested repetitions.",
+                            "Option C: Always using non-greedy quantifiers.",
+                            "Option D: Ignoring character classes."
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "What is one potential consequence of poorly optimized regex patterns such as evilregex, on a web server?",
+                        options: [
+                            "Option A: Increased security against internal cyber attacks.",
+                            "Option B: Increased edge case detection.",
+                            "Option C: It'll suffer a Denial of Service attack that'll slow or halt web traffic."
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What are good practices to avoid using evilregex by accident?",
+                        options: [
+                            "Option A: Be wary of pulling any regex pattern from the internet without verifying that it came from a reputable source.",
+                            "Option B: Try not to overcomplicate your expression, often there is ways to simplify a long expression that might contain hard to diagnose evilregex issues.",
+                            "Option C: Test the regex statement out thoroughly using a static and dynamic regex analyzer that'll detect any traces of a ReDoS coming from a pattern.",
+                            "Option D: All of the above."
+                        ],
+                        correctAnswer: 3
+                    }
+                ]
+            },
+            "mh-dynamiclink": {
+                "100": [
+                    {
+                        question: "Why is dynamic linking used in software development?",
+                        options: [
+                            "Option A: To reduce program startup time and memory footprint.",
+                            "Option B: To increase code portability across different operating systems.",
+                            "Option C: To facilitate runtime updates and patching without recompilation.",
+                            "Option D: All of the above."
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What does the LD_PRELOAD environment variable do in the context of dynamic linking?",
+                        options: [
+                            "Option A: It specifies the directory where dynamic libraries are located.",
+                            "Option B: It forces the dynamic linker to load a specified shared library before all others.",
+                            "Option C: It sets the priority of dynamically linked libraries during program execution.",
+                            "Option D: It controls the order in which static libraries are linked."
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "In the context of the provided lab, what security implications arise from the use of LD_PRELOAD by an attacker?",
+                        options: [
+                            "Option A: It allows the attacker to control the order of static library linking.",
+                            "Option B: It facilitates the creation of dynamic libraries with improved performance.",
+                            "Option C: It enables the attacker to preload vulnerable library functions and potentially overwrite legitimate ones.",
+                            "Option D: It enhances the security of the program by preventing unauthorized library access."
+                        ],
+                        correctAnswer: 2
+                    }
+                ],
+                "300": [
+                    {
+                        question: "Why is dynamic linking used in software development?",
+                        options: [
+                            "Option A: To reduce program startup time and memory footprint.",
+                            "Option B: To increase code portability across different operating systems.",
+                            "Option C: To facilitate runtime updates and patching without recompilation.",
+                            "Option D: All of the above."
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What does the LD_PRELOAD environment variable do in the context of dynamic linking?",
+                        options: [
+                            "Option A: It specifies the directory where dynamic libraries are located.",
+                            "Option B: It forces the dynamic linker to load a specified shared library before all others.",
+                            "Option C: It sets the priority of dynamically linked libraries during program execution.",
+                            "Option D: It controls the order in which static libraries are linked."
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        question: "In the context of the provided lab, what security implications arise from the use of LD_PRELOAD by an attacker?",
+                        options: [
+                            "Option A: It allows the attacker to control the order of static library linking.",
+                            "Option B: It facilitates the creation of dynamic libraries with improved performance.",
+                            "Option C: It enables the attacker to preload vulnerable library functions and potentially overwrite legitimate ones.",
+                            "Option D: It enhances the security of the program by preventing unauthorized library access."
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            "mh-misconfiguredapi": {
+                "300": [
+                    {
+                        question: "Where can you look to see cached local files on Firefox?",
+                        options: [
+                            "Option A: about:config",
+                            "Option B: about:memory",
+                            "Option C: about:networking",
+                            "Option D: about:cache"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        question: "What Cache-Control directive will cause no response data to be cached?",
+                        options: [
+                            "Option A: Cache-Control: no-cache",
+                            "Option B: Cache-Control: cache-off",
+                            "Option C: Cache-Control: no-store",
+                            "Option D: No directive/header, leave blank."
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "What are the consequences of a website not using proper cache-control directives for sensitive information?",
+                        options: [
+                            "Option A: Sensitive information might be cached without the client knowing it, resulting in an attacker being able to look at the data later.",
+                            "Option B: An attacker can inject new data into the website.",
+                            "Option C: The attacker might be able to cause a disruption to the website.",
+                            "Option D: If the cache-control directive is ignored, the default will be no caching of content, so there is no risk."
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            },
+            "vl-strdiff": {
+                "400": [
+                    {
+                        question: "What is the vulnerable function?",
+                        options: [
+                            "Option A: similarity_percentage",
+                            "Option B: bar",
+                            "Option C: main"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the instruction that'll give you the offset from the buffer to the base pointer, ebp?",
+                        options: [
+                            "Option A: lea -0x5c (%ebp), %eax",
+                            "Option B: sub $0x7c, $esp",
+                            "Option C: push $ebp",
+                            "Option D: mov %eax, -0x7c(%ebp)"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "If the offset from the vulnerable buffer to the return address is 100 bytes & the return address for some malicious code or a function is 0x1153fca5, construct a payload that'll overwrite the return address.",
+                        options: [
+                            'Option A. ./main $(python3 -c \'print("a"*96 + "\\xa5\\xfc\\x53\\x11")\') arg2',
+                            'Option B. ./main $(python3 -c \'print("a"*100 + "\\x11\\x53\\xfc\\xa5")\') arg2',
+                            'Option C. ./main $(python3 -c \'print("a"*96 + "\\x25\\xee\\xf5\\x12")\') arg2',
+                            'Option D. ./main $(python3 -c \'print("a"*100 + "\\xa5\\xfc\\x53\\x11")\') arg2'
+                        ],
+                        correctAnswer: 3
+                    }
+                ]
+            }, 
+            "vl-strdiff": {
+                "300": [
+                    {
+                        question: "What is the vulnerable function?",
+                        options: [
+                            "Option A: similarity_percentage",
+                            "Option B: bar",
+                            "Option C: main"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the instruction that'll give you the offset from the buffer to the base pointer, ebp?",
+                        options: [
+                            "Option A: lea -0x5c (%ebp), %eax | Offset 0x5C",
+                            "Option B: sub $0x7c, $esp | Offset 0x7c",
+                            "Option C: push $ebp | Offset 0x00",
+                            "Option D: mov %eax, -0x7c(%ebp) | Offset 0x7c"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the offset from the buffer to the return address, which is used to overwrite the return address?",
+                        options: [
+                            "Option A: 0x5c + 8 = 100",
+                            "Option B: 0x7c + 4 = 128",
+                            "Option C: 0x5c + 4 = 96",
+                            "Option D: 0x7c + 16 = 140"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "If the offset from the vulnerable buffer to the return address is 100 bytes & the return address for some malicious code or a function is 0x11 53 fc a5, construct a payload that'll overwrite the return address.",
+                        options: [
+                            'Option A. ./main $(python3 -c \'print("a"*96 + "\\xa5\\xfc\\x53\\x11")\') arg2',
+                            'Option B. ./main $(python3 -c \'print("a"*100 + "\\x11\\x53\\xfc\\xa5")\') arg2',
+                            'Option C. ./main $(python3 -c \'print("a"*96 + "\\x25\\xee\\xf5\\x12")\') arg2',
+                            'Option D. ./main $(python3 -c \'print("a"*100 + "\\xa5\\xfc\\x53\\x11")\') arg2'
+                        ],
+                        correctAnswer: 3
+                    }
+                ],
+                "300": [
+                    {
+                        question: "What is the vulnerable function?",
+                        options: [
+                            "Option A*: similarity_percentage",
+                            "Option B: bar",
+                            "Option C: main"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the instruction that'll give you the offset from the buffer to the base pointer, ebp?",
+                        options: [
+                            "Option A*: lea -0x5c (%ebp), %eax | Offset 0x5C",
+                            "Option B: sub $0x7c, $esp | Offset 0x7c",
+                            "Option C: push $ebp | Offset 0x00",
+                            "Option D: mov %eax, -0x7c(%ebp) | Offset 0x7c"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the offset from the buffer to the return address, which is used to overwrite the return address?",
+                        options: [
+                            "Option A: 0x5c + 8 = 100",
+                            "Option B: 0x7c + 4 = 128",
+                            "Option C*: 0x5c + 4 = 96",
+                            "Option D: 0x7c + 16 = 140"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        question: "If the offset from the vulnerable buffer to the return address is 100 bytes & the return address for some malicious code or a function is 0x11 53 fc a5, construct a payload that'll overwrite the return address.",
+                        options: [
+                            'Option A. ./main $(python3 -c \'print("a"*96 + "\\xa5\\xfc\\x53\\x11")\') arg2',
+                            'Option B. ./main $(python3 -c \'print("a"*100 + "\\x11\\x53\\xfc\\xa5")\') arg2',
+                            'Option C. ./main $(python3 -c \'print("a"*96 + "\\x25\\xee\\xf5\\x12")\') arg2',
+                            'Option D*. ./main $(python3 -c \'print("a"*100 + "\\xa5\\xfc\\x53\\x11")\') arg2'
+                        ],
+                        correctAnswer: 3
+                    }
+                ],
+                "100": [
+                    {
+                        question: "What is the vulnerable function?",
+                        options: [
+                            "Option A*: similarity_percentage",
+                            "Option B: bar",
+                            "Option C: main"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        question: "What is the offset from the buffer (0x5c) to the return address, which is used to overwrite the return address (Hint, it is 4 bytes away from the buffer).",
+                        options: [
+                            "Option A: 0x5c + 8 = 100",
+                            "Option B: 0x7c + 4 = 128",
+                            "Option C*: 0x5c + 4 = 96",
+                            "Option D: 0x7c + 16 = 140"
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            "vl-qa": {
+            "100": [
+                {
+                    question: "Which function in qa_library module.py is vulnerable to SQL injection? (Hint, check for user-sourced variables being used directly in SQL statements that are executed without preparation)",
+                    options: [
+                        "Option A: get_question_text_by_id",
+                        "Option B: check_answer",
+                        "Option C: connect_to_database",
+                        "Option D: add_question"
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What are some good practices to combat vulnerable libraries?",
+                    options: [
+                        "Option A: Regularly update libraries & dependencies.",
+                        "Option B: Manual and automated code review.",
+                        "Option C: Checking library community for support and seeing up-to-date news.",
+                        "Option D: All of the above."
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "What input results in a SQL injection, in the context of the lab?",
+                    options: [
+                        "Option A: Au",
+                        "Option B: Column Five",
+                        "Option C: 2015.5$%",
+                        "Option D: abc' OR 1=1;#"
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "Which of the following is a major cause of SQL injection attacks & other similar injection attacks.",
+                    options: [
+                        "Option A: Improper bounds check",
+                        "Option B: Weak password policies",
+                        "Option C: Improper handling of user input",
+                        "Option D: Lack of firewall protection"
+                    ],
+                    correctAnswer: 2
+                }
+            ],
+            "300": [
+                {
+                    question: "Which function in qa_library module.py is vulnerable to SQL injection? (Hint, check for user-sourced variables being used directly in SQL statements that are executed without preparation)",
+                    options: [
+                        "Option A: get_question_text_by_id",
+                        "Option B: check_answer",
+                        "Option C: connect_to_database",
+                        "Option D: add_question"
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What are some good practices to combat vulnerable libraries?",
+                    options: [
+                        "Option A: Regularly update libraries & dependencies.",
+                        "Option B: Manual and automated code review.",
+                        "Option C: Checking library community for support and seeing up-to-date news.",
+                        "Option D: All of the above."
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "What input results in a SQL injection, in the context of the lab?",
+                    options: [
+                        "Option A: Au",
+                        "Option B: Column Five",
+                        "Option C: 2015.5$%",
+                        "Option D: abc' OR 1=1;#"
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "Which of the following is a major cause of SQL injection attacks & other similar injection attacks.",
+                    options: [
+                        "Option A: Improper bounds check",
+                        "Option B: Weak password policies",
+                        "Option C: Improper handling of user input",
+                        "Option D: Lack of firewall protection"
+                    ],
+                    correctAnswer: 2
+                }
+            ],
+            "400": [
+                {
+                    question: "Which function in qa_library module.py is vulnerable to SQL injection? (Hint, check for user-sourced variables being used directly in SQL statements that are executed without preparation)",
+                    options: [
+                        "Option A: get_question_text_by_id",
+                        "Option B: check_answer",
+                        "Option C: connect_to_database",
+                        "Option D: add_question"
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What are some good practices to combat vulnerable libraries?",
+                    options: [
+                        "Option A: Regularly update libraries & dependencies.",
+                        "Option B: Manual and automated code review.",
+                        "Option C: Checking library community for support and seeing up-to-date news.",
+                        "Option D: All of the above."
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "What input results in a SQL injection, in the context of the lab?",
+                    options: [
+                        "Option A: Au",
+                        "Option B: Column Five",
+                        "Option C: 2015.5$%",
+                        "Option D: abc' OR 1=1;#"
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "Which of the following is a major cause of SQL injection attacks & other similar injection attacks.",
+                    options: [
+                        "Option A: Improper bounds check",
+                        "Option B: Weak password policies",
+                        "Option C: Improper handling of user input",
+                        "Option D: Lack of firewall protection"
+                    ],
+                    correctAnswer: 2
+                }
+            ]
+        },
+        "token-ghosttoken": {
+            "100": [
+                {
+                    question: "How is the attacker able to 'hide' their traces once inside the system?",
+                    options: [
+                        "Option A: The attacker uses a VPN to tunnel data outside of the network.",
+                        "Option B: The attacker deletes their account to hide themselves from anyone who might inspect the users table on settings.php",
+                        "Option C: The attacker makes a few accounts, hoping to blend in.",
+                        "Option D: The attacker deletes the account of another user."
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What could be the consequences of this token user-after-free vulnerability in live environments?",
+                    options: [
+                        "Option A: An attacker could gain access to a system's resources on demand and stay hidden to any administrators who could correct the issue.",
+                        "Option B: The vulnerability might result in system crashes and service disruptions, causing downtime for critical applications and impacting the availability of services.",
+                        "Option C: Authentication mechanisms could be compromised, allowing attackers to impersonate legitimate users and carry out malicious activities under their identities.",
+                        "Option D: Network traffic could be intercepted, leading to man-in-the-middle attacks, where sensitive information is intercepted and potentially altered by malicious actors."
+                    ],
+                    correctAnswer: 0
+                }
+            ],
+            "300": [
+                {
+                    question: "How is the attacker able to 'hide' their traces once inside the system?",
+                    options: [
+                        "Option A: The attacker uses a VPN to tunnel data outside of the network.",
+                        "Option B: The attacker deletes their account to hide themselves from anyone who might inspect the users table on settings.php",
+                        "Option C: The attacker makes a few accounts, hoping to blend in.",
+                        "Option D: The attacker deletes the account of another user."
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What could be the consequences of this token user-after-free vulnerability in live environments?",
+                    options: [
+                        "Option A: An attacker could gain access to a system's resources on demand and stay hidden to any administrators who could correct the issue.",
+                        "Option B: The vulnerability might result in system crashes and service disruptions, causing downtime for critical applications and impacting the availability of services.",
+                        "Option C: Authentication mechanisms could be compromised, allowing attackers to impersonate legitimate users and carry out malicious activities under their identities.",
+                        "Option D: Network traffic could be intercepted, leading to man-in-the-middle attacks, where sensitive information is intercepted and potentially altered by malicious actors."
+                    ],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What is the difference between the access and refresh tokens in this system?",
+                    options: [
+                        "Option A: The access tokens are used to get a new refresh token, while refresh tokens can access the permitted resources.",
+                        "Option B: The refresh token and access tokens have similar purposes.",
+                        "Option C: In the lab, only access tokens are utilized for accessing permitted resources.",
+                        "Option D: The refresh tokens are used to get a new access token, while access tokens can access the permitted resources."
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "What is the attack flow for an attacker who wishes to stay 'hidden' being able to access directory data?",
+                    options: [
+                        "Option A: The attacker gains an account and notes their refresh token, they delete the account, when they wish to view resources they can use the refresh token to remove the account from a 'deleting' state.",
+                        "Option B: The attacker gains an account and notes their access token, they delete the account, when they wish to view resources they can use the access token to remove the account from a 'deleting' state.",
+                        "Option C: The attacker gains an account and notes their refresh token, they delete the account, when they wish to view resources they can use the refresh token to create a new account.",
+                        "Option D: All of the above."
+                    ],
+                    correctAnswer: 0
+                }
+            ],
+            "400": [
+                {
+                    question: "How is the attacker able to 'hide' their traces once inside the system?",
+                    options: [
+                        "Option A: The attacker uses a VPN to tunnel data outside of the network.",
+                        "Option B: The attacker deletes their account to hide themselves from anyone who might inspect the users table on settings.php",
+                        "Option C: The attacker makes a few accounts, hoping to blend in.",
+                        "Option D: The attacker deletes the account of another user."
+                    ],
+                    correctAnswer: 1
+                },
+                {
+                    question: "What is the difference between the access and refresh tokens in this system?",
+                    options: [
+                        "Option A: The access tokens are used to get a new refresh token, while refresh tokens can access the permitted resources.",
+                        "Option B: The refresh token and access tokens have similar purposes.",
+                        "Option C: In the lab, only access tokens are utilized for accessing permitted resources.",
+                        "Option D: The refresh tokens are used to get a new access token, while access tokens can access the permitted resources."
+                    ],
+                    correctAnswer: 3
+                },
+                {
+                    question: "What is the attack flow for an attacker who wishes to stay 'hidden' being able to access directory data?",
+                    options: [
+                        "Option A: The attacker gains an account and notes their refresh token, they delete the account, when they wish to view resources they can use the refresh token to remove the account from a 'deleting' state.",
+                        "Option B: The attacker gains an account and notes their access token, they delete the account, when they wish to view resources they can use the access token to remove the account from a 'deleting' state.",
+                        "Option C: The attacker gains an account and notes their refresh token, they delete the account, when they wish to view resources they can use the refresh token to create a new account.",
+                        "Option D: All of the above."
+                    ],
+                    correctAnswer: 0
+                },
+                {
+                    question: "What could be the consequences of this token user-after-free vulnerability in live environments?",
+                    options: [
+                        "Option A: An attacker could gain access to a system's resources on demand and stay hidden to any administrators who could correct the issue.",
+                        "Option B: The vulnerability might result in system crashes and service disruptions, causing downtime for critical applications and impacting the availability of services.",
+                        "Option C: Authentication mechanisms could be compromised, allowing attackers to impersonate legitimate users and carry out malicious activities under their identities.",
+                        "Option D: Network traffic could be intercepted, leading to man-in-the-middle attacks, where sensitive information is intercepted and potentially altered by malicious actors."
+                    ],
+                    correctAnswer: 0
+                }
+            ]
+        }
+        };
+
+        function checkAnswer(questionIndex) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lab = urlParams.get('lab');
+            const level = urlParams.get('level');
+
+            const questions = questionDatabase[lab] && questionDatabase[lab][level];
+
+            if (questions && questions.length > 0) {
+                const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+
+                if (selectedOption) {
+                    const userAnswer = parseInt(selectedOption.value);
+                    const correctIndex = questions[questionIndex].correctAnswer;
+
+                    const questionDiv = document.getElementById(`question${questionIndex}`);
+
+                    if (userAnswer === correctIndex) {
+                        alert('Correct!');
+                        questionDiv.style.backgroundColor = 'lightgreen';
+                    } else {
+                        alert('Wrong! Please try again.');
+                        questionDiv.style.backgroundColor = 'lightcoral';
+                    }
+                } else {
+                    alert('Please select an answer before submitting.');
+                }
+            } else {
+                document.getElementById('questions-list').innerHTML = 'No questions available.';
+            }
+        }
+
+        function changeSection(section, name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lab = urlParams.get('lab');
+            const level = urlParams.get('level');
+
+            document.getElementById('lab-text').innerHTML = ""; // reset lab/questions divs
+            document.getElementById('questions-list').innerHTML = "";
+
+            document.getElementById('lab-title').innerText = name + " Section";
+
+            if (section === "questions") {
+                const questions = questionDatabase[lab] && questionDatabase[lab][level];
+
+                if (questions && questions.length > 0) {
+                    const questionsList = document.getElementById('questions-list');
+                    questionsList.innerHTML = "";
+
+                    questions.forEach((q, index) => {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.id = `question${index}`;
+                        questionDiv.innerHTML = `
+                            <p>${index + 1}. ${q.question}</p>
+                            ${q.options.map((option, i) => `
+                                <input type="radio" name="question${index}" value="${i}" onclick="checkAnswer(${index})">
+                                <label>${option}</label><br>
+                            `).join('')}
+                        `;
+                        questionsList.appendChild(questionDiv);
+                    });
+                } else {
+                    document.getElementById('questions-list').innerHTML = 'No questions available.';
+                }
+            } else {
+                const htmlFilePath = `./labs/${lab}/${level}/${section}.html`;
+
+                fetch(htmlFilePath)
+                    .then(response => response.text())
+                    .then(htmlContent => {
+                        document.getElementById('lab-text').innerHTML = htmlContent;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching HTML content:', error);
+                        document.getElementById('lab-text').innerHTML = 'Error loading content.';
+                    });
+            }
+        }
+        changeSection('laboverview', 'Lab Overview')
+    </script>
+</body>
+</html>

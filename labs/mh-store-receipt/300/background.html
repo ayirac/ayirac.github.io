@@ -1,0 +1,23 @@
+An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation. When this occurs, the value may wrap to become a very small or negative number. While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected. This is especially the case if the integer overflow can be triggered using user-supplied inputs. This becomes security-critical when the result is used to control looping, make a security decision, or determine the offset or size in behaviors such as memory allocation, copying, concatenation, etc.
+<br><br>
+<img src="./assets/sintoverflow.jpg" alt="IntOverflow">
+<br><br>
+https://compsecurityconcepts.wordpress.com/2014/12/31/integer-overflow/
+<br><br>
+An OS command vulnerability arises when a program constructs all or part of an operating system command using externally-influenced input from an upstream component. The issue lies in the failure to properly neutralize or incorrectly neutralize special elements within the command, allowing attackers to execute unexpected, potentially dangerous commands directly on the operating system. This poses a significant threat in environments where the attacker lacks direct access to the OS, such as web applications. In privileged programs, the vulnerability could enable attackers to specify commands that are usually restricted or execute alternate commands with higher privileges.
+<br><br>
+In a C program, sytem(myCommand) might be used to invoke some program to run in a shell. If myCommand can be influenced by an attacker, there is a chance they can append a statement closure ';' and add a new unanticipated command, potentially malicious with the privleges of the program. The vulnerability manifests in two distinct subtypes: one where the application intends to execute a fixed program with externally-supplied inputs as arguments, and another where the application accepts input to fully determine the program and commands to run.
+<br><br>
+<img src="./assets/os-inject.png" alt="Command Injection">
+<br><br>
+https://www.researchgate.net/figure/Command-injection-attacks_fig1_322875799
+<br><br>
+For example, if /bin/cat is used to display text back to a user in a program, and it allows the program user to specify a file without checking for malicious input, then it is possible to do OS command injection. A ';' character can be used to end the previous command and an attacker could append a new command.
+<br><br>
+In 1996, the Ariane 5 rocket's Inertial Reference System, responsible for measuring the rocket's position, encountered an overflow error in the conversion of a 64-bit floating-point number to a 16-bit signed integer. This error led to a critical failure in the guidance system, causing the rocket to veer off course and ultimately self-destruct. 
+<br><br>
+In 1996, Resort World casino had an interger overflow bug with one of their machines that resulted in a prize ticket amount close to 2^32, most likely achieved by an unforseen subtraction.
+<br><br>
+In 2015, Jeep Cherokee was reported to be hackable remotely due to a OS command injection vulnerability. A function that takes a user supplied filename had no sanitization and allowed for malicious payloads to be executed that led to the takeover of the car.
+<br><br>
+In 2023, a variety of ConnectedIO IoT and Router devices were found to have OS Command injection vulnerabilities that allowed attackers to execute any command via special MQTT messages.

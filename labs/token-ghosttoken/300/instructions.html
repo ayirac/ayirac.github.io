@@ -1,0 +1,13 @@
+<ol>
+    <li>Examine the website with and without GET parameters user &amp; token using values from var/www/html/refreshtokens.txt &amp; accesstokens.txt</li>
+    <li><p>Examine settings.php, try deactivating an account and seeing what occurs when you try to fetch the directory with token that worked before</p>
+        <pre><code><span class="hljs-symbol">  http:</span><span class="hljs-comment">//localhost:8080/directories/groupB/?user=john&amp;token=bed1711d8f7e5eb3c11d1ad31bebdafc</span>
+        <span class="hljs-symbol">  http:</span><span class="hljs-comment">//localhost:8080/settings.php?user=john&amp;token=bed1711d8f7e5eb3c11d1ad31bebdafc</span>
+        </code></pre>
+    </li>
+    <li><p>Try displaying all accounts, see if anything changed from before. Reactivate/deactivate to see the change.</p></li>
+    <li>Come up with likely attack scenario (gain access to system once; access settings.php, make account, delete account, re-enable account to get a new access token)</li>
+</ol>
+
+<h5 id="access-tokens">Access Tokens</h5><pre><code>john bed1711d8f7e5eb3c11d1ad31bebdafc 1<br>test cf851d78175829d647a1a1b811379ab4 <span class="hljs-number">1</span>     </code></pre><h5 id="refresh-tokens">Refresh Tokens</h5><pre><code><span class="hljs-keyword">john </span><span class="hljs-keyword">bed1710d8f7e5eb3c10d0ad30bebdafc 1</span><br>test dXNlcj10ZXN0CmRpcmVjdG9yeT1ncm91cEI= 1</pre><ol></ol>
+    <br>

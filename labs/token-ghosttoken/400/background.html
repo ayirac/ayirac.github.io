@@ -1,0 +1,13 @@
+Tokens are used quite frequently to authenticate requests and there are many implemntation issues that might be encountered. In this lab, a file directory website allows an user with an access token to access some directory that the token is attached to. As a result of improper system design, some data might be hidden from an administrator which would allow him to remove malicious users, causing them to be in a 'ghost' state.
+<br><br>
+Below is attack flow for a similar issue that was discovered in the Google Cloud Project (GCP) OAuth implementation. A victim authorizes a 3rd party OAuth application controlled by an attacker, which grants the attacker an access token and refresh token. GCP allows users to delete 'projects' which may have applications under them, this causes the applications to be deactivated along with their access tokens. The deleted projects would be put into a six month delete state where any user with management permissions can restore the project. 
+<br><br>
+Once the project is restored, a new access token is created, and the attacker can use that token to access any resources. Afterwards, the attacker can do the steps from before to hide the backdoor. 
+<br><br>
+<img src="./assets/gcp.png" alt="GCP">
+<br><br>
+In this lab, a file directory website allows for directories to be viewed by users with valid access tokens. The website has a settings.php website that'll allow users to delete, create, activate, and list users for a directory. Refresh tokens are created on user creation and can be used to reactivate an account & get a new access token. A process for how an attacker might be able to exploit the system in place is below.
+<br><br>
+<img src="./assets/lab-diagram.png" alt="StackDiagramOF">
+<br><br>
+The lab programs/website code can be found at /var/www

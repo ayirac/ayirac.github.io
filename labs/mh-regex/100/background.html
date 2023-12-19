@@ -1,0 +1,13 @@
+Regular expression (regex) is a string of characters that dictate a pattern, another string can be checked against the regex to find matches. They are often used for input validation for client and server side operations, replacing parts of a string, or for classifying parts of a string into tokens.
+<br><br>
+The regex pattern is converted into a nondeterministic finite automaton, which may have state-input pairs that lead to multiple states. Because of this, the nondeterministic algorithm may backtrack when it determines the current path it is on fails to match. Depending on the pattern, the matching might be inefficient which will cause backtracking which can lead a Regex Denial of Server (ReDoS). Such patterns, known as evilregex, are often created by developers accidentally when accounting for edge cases in their desired match behaivor or by people copy and pasting vulnerable regex strings found online without checking if they're safe to use.
+<br><br>
+In the past, several popular programs and libraries were discovered to have ReDoS vulnerabiltiies. In 2020, popular user-agent detection javascript library UAParser.js was found to have a ReDoS vulnerability that attackers took advantage of with crafted long user-agent strings. In 2016, PostgreSQL was found to be prone to ReDoS due to out-of-range unicode characters not being accounted for in initial design, resulting in backend crashes for PostgreSQL servers. In 2012, Google Chrome was found to have a similar unicode out-of-range issue that resulted in ReDoS for clients who visited malicious webpages.
+<br><br>
+<img src="./assets/nfa.png" alt="nfa">
+<br><br>
+An example of one of these evilregex is ^(a+)+$ (pictured above), which matches one or more sequences of consecutive 'a' characters. If the string is filled with 'a' characters only, then it finds a match quickly, but if the next input isnt an 'a' it'll backtrack to try out different combinations of grouped 'a's. 
+<br><br>
+For the string 'aaaab', the following groups would be: “(aaaa)”, “(aaa)(a)”, “(aa)(aa)”, “(aa)(a)(a)”, “(a)(aa)”,”(a)(aa)(a)”,”(a)(a)(aa)”,”(a)(a)(a)(a)”. The amount of combinations tried is 2^n-1, which can lead to an expensive expoential resource waste depending on the amount of input inserted, the amount of time spent on 'aaaab' will double each time another a is added.
+<br><br>
+Famous incidents for ReDoS vulnerablities include, various Node.js packages such as uglify-js, semver, and ms contained evilregex statements that were discovered in 2015, and patched.

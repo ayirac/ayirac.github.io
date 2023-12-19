@@ -1,0 +1,20 @@
+The statement below selects all columns from the user table given the NAME variable matches the selected $name. Since the variable is directly in the statement, it is possible to inject more data than intended by the developer.
+<br>&emsp;SELECT * FROM users WHERE NAME='$name';
+<br>&emsp;Malicious input to exploit the above statement: input Joe' OR 1=1;#
+<br><br>
+This has the effect of using Joe for the name variable & closing off the quotations with the '. The OR 1=1 statement will calculate to always true, causing this statement to always execute without considering the other conditions. The ;# will close the statement and comment out the rest of the code.
+<br><br>
+Below is an image showing an attacker sending a request to a webserver with a malicious GET parameter that takes advantage of a programs improper precautions for SQL injections.
+<img src="./assets/mget.png" alt="Malicous GET">
+<br><br>
+Vulnerable libraries incidents:
+<ul>
+    <li>The Equifax Data Breach (2017), exposed sensitive information of millions, was facilitated by the exploitation of a vulnerability in an outdated Apache Struts (library/framework for building web apps) that had been patched previously.</li>
+    <li>OpenSSL Heartbleed Vulnerablity (2013): the OpenSSL library was found to have a critical over-read vulnerabllity known as Heartbleed that affected millions of people and thousands of websites as a result of no bounds checking for a echo client-server-client heartbeat function.</li>
+</ul>
+<br><br>
+SQL Injections incidents:
+<ul>
+    <li>Sony PlayStation Network Hack (2011): In 2011, the Sony PlayStation Network experienced a significant security breach. The attackers exploited a SQL injection vulnerability to gain unauthorized access to the network, resulting in the compromise of personal information of millions of users.</li>
+    <li>TJX Companies Data Breach (2007): The TJX Companies, which owns retailers such as T.J. Maxx and Marshalls, suffered a massive data breach in 2007. The attackers used SQL injection to infiltrate the company's networks, leading to the theft of credit card data and personal information of over 94 million customers.</li>
+</ul>

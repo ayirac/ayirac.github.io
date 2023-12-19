@@ -1,0 +1,15 @@
+Shared libraries are denoted by their .so extension, help save on needing to have multiple copies of a library spread across multiple programs. The library code is link/loaded at runetime of the program. If the LD_PRELOAD enviroment variable contains a directory that has an attacker/user created library, then any functions defined will be used instead of the legitmate function. Depending on the linker/loader, there may be errors when functions with the same name are seen, in this system there is no such errors. There are alot of uses for this, in this lab we will simply overwrite the sleep() function with a basic printf statement.
+<br><br>
+On Linux and macOS, hijacking dynamic linker variables may grant access to the victim process's memory, system/network resources, and possibly elevated privileges. This method may also evade detection from security products since the execution is masked under a legitimate process. 
+<br><br>
+On linux, you can see the current LD_PRELOAD directories and files by typing echo LD_PRELOAD
+<br>
+You can export new directories and files to LD_PRELOAD by typing export LD_PRELOAD=./your-malicious-lib.so
+<br>
+For compiling the library, you can use the following commands
+<ul>
+    <li>gcc -fPIC -g -c lib.c                           // compile obj file</li>
+    <li>gcc -shared -o newlib.so.1.0.1 lib.o -lc        // create shared lib</li>
+</ul>
+
+On macOS, a similar feature exists but the name of the variable is DYLD_INSERT_LIBRARIES.

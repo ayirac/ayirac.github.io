@@ -1,0 +1,18 @@
+An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation. When this occurs, the value may wrap to become a very small or negative number. While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected. This is especially the case if the integer overflow can be triggered using user-supplied inputs. This becomes security-critical when the result is used to control looping, make a security decision, or determine the offset or size in behaviors such as memory allocation, copying, concatenation, etc.
+<br><br>
+Programming libraries assist by cutting down on the amount of time a programmer spends developing programs by providing functionality pre-written, and sometimes pre-compiled. Being skeptical of libraries and knowing how to look for common mistatkes is vital. A hobby project might not suffer too much from using a vulnerable library, but in a critical program for a business this could be disastrous.
+<br><br>
+<img src="./assets/StackDiagramOF.png" alt="StackDiagramOF">
+<br><br>
+Stack overflows occur when a vulnerable buffer goes past its allocated bounds as a result of no input validation or limiting, potentially overwritting the function's return address with a new one. If a vulnerable buffer is declared early on in a function, it is likely near the base pointer, and we might only need to add 4 bytes of data (size of base pointer) to get to the start of the return address.
+<br><br>
+Vulnerable libraries being used in the past:
+* The Equifax Data Breach (2017), exposed sensitive information of millions, was facilitated by the exploitation of a vulnerability in an outdated Apache Struts (library/framework for building web apps) that had been patched previously.
+* OpenSSL Heartbleed Vulnerablity (2013): the OpenSSL library was found to have a critical over-read vulnerabllity known as Heartbleed that affected millions of people and thousands of websites as a result of no bounds checking for a echo client-server-client heartbeat function.
+<br><br>
+Buffer overflow incidents:
+<uL>
+A number of worms that spread throughout the late 90s and early 2000s in various vendors that took advtange of buffer overflow bugs.
+    <li>SQL Slammer (2003): A fast spreading worm that took advantage of a buffer overflow in Microsoft SQL Server, a 128 byte buffer was being exploited.</li>
+    <li>Morris Worm (1988): One of the first worms that spread that took advantage of a buffer overflow in a Unix 'Finger' service</li>
+</uL>

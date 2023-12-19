@@ -1,0 +1,6 @@
+<ol>
+    <li>Determine a list of libraries being used by the program you wish to target with ldd.</li>
+    <li>Rename the provided malicious .so program, which invokes a shell, to the targetted library.</li>
+    <li>Overwrite LD-PRELOAD envar with attacker controlled directory containing the malicious .so </li>
+    <li>Run the program, you should be able to get a shell.</li>
+</ol>
